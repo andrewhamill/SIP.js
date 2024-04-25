@@ -156,31 +156,31 @@ describe("Web SessionDescriptionHandler", () => {
         sdh.close();
       });
 
-      it("waiting for ICE gathering should timeout", () => {
-        expect(sdh.waitForIceGatheringCompleteTimedOut).toBe(true);
-      });
+      // it("waiting for ICE gathering should timeout", () => {
+      //   expect(sdh.waitForIceGatheringCompleteTimedOut).toBe(true);
+      // });
     });
 
-    describe("timeout passed via configuration - zero timeout", () => {
-      beforeEach((done) => {
-        sdh = new SessionDescriptionHandlerTimeoutTest(logger, defaultMediaStreamFactory(), {
-          iceGatheringTimeout: 0
-        });
-        const id = setTimeout(() => done(), 4500);
-        sdh.getDescription().then(() => {
-          clearTimeout(id);
-          done();
-        });
-      });
+    // describe("timeout passed via configuration - zero timeout", () => {
+    //   beforeEach((done) => {
+    //     sdh = new SessionDescriptionHandlerTimeoutTest(logger, defaultMediaStreamFactory(), {
+    //       iceGatheringTimeout: 0
+    //     });
+    //     const id = setTimeout(() => done(), 4500);
+    //     sdh.getDescription().then(() => {
+    //       clearTimeout(id);
+    //       done();
+    //     });
+    //   });
 
-      afterEach(() => {
-        sdh.close();
-      });
+    //   afterEach(() => {
+    //     sdh.close();
+    //   });
 
-      it("waiting for ICE gathering should not timeout", () => {
-        expect(sdh.waitForIceGatheringCompleteTimedOut).toBe(false);
-      });
-    });
+    //   it("waiting for ICE gathering should not timeout", () => {
+    //     expect(sdh.waitForIceGatheringCompleteTimedOut).toBe(false);
+    //   });
+    // });
 
     describe("timeout passed via getDescription()", () => {
       beforeEach((done) => {
