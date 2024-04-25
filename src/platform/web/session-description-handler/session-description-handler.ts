@@ -946,9 +946,12 @@ export class SessionDescriptionHandler implements SessionDescriptionHandlerDefin
 
     peerConnection.onicecandidate = (event): void => {
       this.logger.debug(`SessionDescriptionHandler.onicecandidate`);
-      this.logger.debug(`this._peerConnectionDelegate`, this._peerConnectionDelegate);
+
       if (this._peerConnectionDelegate?.onicecandidate) {
+        this.logger.debug(`this._peerConnectionDelegate?.onicecandidate defined`);
         this._peerConnectionDelegate.onicecandidate(event);
+      } else {
+        this.logger.debug(`this._peerConnectionDelegate?.onicecandidate undefined`);
       }
     };
 
