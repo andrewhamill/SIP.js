@@ -946,13 +946,19 @@ export class SessionDescriptionHandler implements SessionDescriptionHandlerDefin
 
     peerConnection.onicecandidate = (event): void => {
       this.logger.debug(`SessionDescriptionHandler.onicecandidate`);
-
-      if (this._peerConnectionDelegate?.onicecandidate) {
-        this.logger.debug(`this._peerConnectionDelegate?.onicecandidate defined`);
-        this._peerConnectionDelegate.onicecandidate(event);
-      } else {
-        this.logger.debug(`this._peerConnectionDelegate?.onicecandidate undefined`);
+      if (!event.candidate) {
+        this.logger.log(`Null ice candidate, completing the gathering...`);
+        this.iceGatheringComplete();
+      } else if (event.candidate?.type === "srflx") {
+        this.logger.log(`Found srflx ICE candidate, stop waiting...`);
+        this.iceGatheringComplete();
       }
+      // if (this._peerConnectionDelegate?.onicecandidate) {
+      //   this.logger.debug(`this._peerConnectionDelegate?.onicecandidate defined`);
+      //   this._peerConnectionDelegate.onicecandidate(event);
+      // } else {
+      //   this.logger.debug(`this._peerConnectionDelegate?.onicecandidate undefined`);
+      // }
     };
 
     peerConnection.onicecandidateerror = (event): void => {
