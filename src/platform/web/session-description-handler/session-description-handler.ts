@@ -946,10 +946,13 @@ export class SessionDescriptionHandler implements SessionDescriptionHandlerDefin
 
     peerConnection.onicecandidate = (event): void => {
       this.logger.debug(`SessionDescriptionHandler.onicecandidate`);
+      if (event.candidate && event.candidate.type) {
+        this.logger.debug(event.candidate.type);
+      }
       if (!event.candidate) {
         this.logger.log(`Null ice candidate, completing the gathering...`);
         this.iceGatheringComplete();
-      } else if (event.candidate?.type === "srflx") {
+      } else if (event.candidate.type === "srflx") {
         this.logger.log(`Found srflx ICE candidate, stop waiting...`);
         this.iceGatheringComplete();
       }
